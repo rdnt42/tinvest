@@ -16,7 +16,7 @@ public class CurrencyType {
     private Long id;
 
     @Column(name = "type")
-    private String type;
+    private String name;
 
     public Long getId() {
         return id;
@@ -26,11 +26,11 @@ public class CurrencyType {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String type) {
+        this.name = type;
     }
 }

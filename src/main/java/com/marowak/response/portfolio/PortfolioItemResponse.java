@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class PortfolioItem implements Serializable {
+public class PortfolioItemResponse implements Serializable {
 
     private String figi;
     private String ticker;

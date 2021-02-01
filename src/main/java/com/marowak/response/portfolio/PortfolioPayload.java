@@ -8,13 +8,13 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PortfolioPayload implements Serializable {
-    private List<PortfolioItem> positions  = new ArrayList<>();
+    private List<PortfolioItemResponse> positions  = new ArrayList<>();
 
-    public List<PortfolioItem> getPositions() {
+    public List<PortfolioItemResponse> getPositions() {
         return positions;
     }
 
-    public void setPositions(List<PortfolioItem> positions) {
+    public void setPositions(List<PortfolioItemResponse> positions) {
         this.positions = positions;
     }
 }

@@ -3,7 +3,6 @@ package com.marowak.response.portfolio;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PortfolioResponse  implements Serializable {
