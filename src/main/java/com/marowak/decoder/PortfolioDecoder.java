@@ -53,8 +53,16 @@ public class PortfolioDecoder {
         portfolioItem.setName(item.getName());
         portfolioItem.setTicker(item.getTicker());
 
-        CurrencyType type = currencyTypeRepository.findOneByName(item.getPositionPrice().getValue());
-        portfolioItem.setType(type);
+        if (item.getYieldPrice() != null) {
+            portfolioItem.setYeildPrice(item.getYieldPrice().getValue());
+        }
+
+        if (item.getPositionPrice() != null) {
+            portfolioItem.setPositionPrice(item.getPositionPrice().getValue());
+
+            CurrencyType type = currencyTypeRepository.findOneByName(item.getPositionPrice().getCurrency());
+            portfolioItem.setType(type);
+        }
 
         return portfolioItem;
     }

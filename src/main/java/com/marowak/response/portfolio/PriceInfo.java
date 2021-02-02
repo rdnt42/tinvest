@@ -7,7 +7,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PriceInfo implements Serializable {
     private String currency;
-    private String value;
+    private Double value;
 
     public String getCurrency() {
         return currency;
@@ -17,11 +17,11 @@ public class PriceInfo implements Serializable {
         this.currency = currency;
     }
 
-    public String getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 }

@@ -19,7 +19,7 @@ public class PortfolioItemResponse implements Serializable {
     @JsonProperty("expectedYield")
     private PriceInfo yieldPrice;
 
-    @JsonProperty("positionPrice")
+    @JsonProperty("averagePositionPrice")
     private PriceInfo positionPrice;
 
 

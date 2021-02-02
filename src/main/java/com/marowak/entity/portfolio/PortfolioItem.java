@@ -31,10 +31,10 @@ public class PortfolioItem {
 //    private Long lots;
 
     @Column(name = "yield_price")
-    private Long yeildPrice;
+    private Double yeildPrice;
 
     @Column(name = "position_price")
-    private Long positionPrice;
+    private Double positionPrice;
 
     @Column(name = "currency_type_id")
     private Long currencyTypeId;
@@ -75,19 +75,27 @@ public class PortfolioItem {
         this.balance = balance;
     }
 
-    public Long getYeildPrice() {
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public Double getYeildPrice() {
         return yeildPrice;
     }
 
-    public void setYeildPrice(Long yeildPrice) {
+    public void setYeildPrice(Double yeildPrice) {
         this.yeildPrice = yeildPrice;
     }
 
-    public Long getPositionPrice() {
+    public Double getPositionPrice() {
         return positionPrice;
     }
 
-    public void setPositionPrice(Long positionPrice) {
+    public void setPositionPrice(Double positionPrice) {
         this.positionPrice = positionPrice;
     }
 
