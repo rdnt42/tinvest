@@ -4,8 +4,8 @@ import com.marowak.entity.dictonary.CurrencyType;
 import com.marowak.entity.portfolio.Portfolio;
 import com.marowak.entity.portfolio.PortfolioItem;
 import com.marowak.repository.dictonary.CurrencyTypeRepositoryImpl;
-import com.marowak.response.portfolio.PortfolioItemResponse;
-import com.marowak.response.portfolio.PortfolioResponse;
+import com.marowak.response.portfolioTink.PortfolioTinkItemResponse;
+import com.marowak.response.portfolioTink.PortfolioTinkResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -21,17 +21,17 @@ public class PortfolioDecoder {
         this.currencyTypeRepository = currencyTypeRepository;
     }
 
-    public Portfolio decode(PortfolioResponse response) {
+    public Portfolio decode(PortfolioTinkResponse response) {
         Portfolio portfolio = new Portfolio();
 
         if (response == null || response.getPayload() == null) {
             return null;
         }
 
-        List<PortfolioItemResponse> itemResponses = response.getPayload().getPositions();
+        List<PortfolioTinkItemResponse> itemResponses = response.getPayload().getPositions();
         Set<PortfolioItem> items = new HashSet<>();
 
-        for (PortfolioItemResponse itemResponse : itemResponses) {
+        for (PortfolioTinkItemResponse itemResponse : itemResponses) {
             PortfolioItem item = decode(itemResponse);
 
             items.add(item);
@@ -42,7 +42,7 @@ public class PortfolioDecoder {
         return portfolio;
     }
 
-    public PortfolioItem decode(PortfolioItemResponse item) {
+    public PortfolioItem decode(PortfolioTinkItemResponse item) {
         if (item == null) {
             return null;
         }

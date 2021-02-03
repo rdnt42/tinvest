@@ -20,6 +20,15 @@ public class Portfolio implements Serializable {
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<PortfolioItem> portfolioItems = new HashSet<>();
 
+    public Portfolio() {
+    }
+
+    public Portfolio(Portfolio portfolio) {
+        this.id = portfolio.id;
+        this.timeStamp = portfolio.timeStamp;
+        this.portfolioItems = portfolio.portfolioItems;
+    }
+
     public Long getId() {
         return id;
     }

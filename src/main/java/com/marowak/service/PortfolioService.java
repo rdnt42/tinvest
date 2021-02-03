@@ -1,6 +1,9 @@
 package com.marowak.service;
 
 import com.marowak.entity.portfolio.Portfolio;
+import com.marowak.response.portfolio.PortfolioResponse;
+
+import java.util.List;
 
 public interface PortfolioService {
 
@@ -9,5 +12,8 @@ public interface PortfolioService {
      * @return Portfolio object
      */
     Portfolio getPortfolioREST();
+
+    List<PortfolioResponse> getAll();
+
 
 }

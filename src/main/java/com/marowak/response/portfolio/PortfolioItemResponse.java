@@ -1,35 +1,14 @@
 package com.marowak.response.portfolio;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
-
-public class PortfolioItemResponse implements Serializable {
-
-    private String figi;
+public class PortfolioItemResponse {
     private String ticker;
-    private String isin;
-    private String instrumentType;
     private String name;
+    private String type;
 
     private Long balance;
-    private Long blocked;
-    private Long lots;
 
-    @JsonProperty("expectedYield")
-    private PriceInfo yieldPrice;
-
-    @JsonProperty("averagePositionPrice")
-    private PriceInfo positionPrice;
-
-
-    public String getFigi() {
-        return figi;
-    }
-
-    public void setFigi(String figi) {
-        this.figi = figi;
-    }
+    private Double yeildPrice;
+    private Double positionPrice;
 
     public String getTicker() {
         return ticker;
@@ -37,22 +16,6 @@ public class PortfolioItemResponse implements Serializable {
 
     public void setTicker(String ticker) {
         this.ticker = ticker;
-    }
-
-    public String getIsin() {
-        return isin;
-    }
-
-    public void setIsin(String isin) {
-        this.isin = isin;
-    }
-
-    public String getInstrumentType() {
-        return instrumentType;
-    }
-
-    public void setInstrumentType(String instrumentType) {
-        this.instrumentType = instrumentType;
     }
 
     public String getName() {
@@ -63,6 +26,14 @@ public class PortfolioItemResponse implements Serializable {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Long getBalance() {
         return balance;
     }
@@ -71,36 +42,19 @@ public class PortfolioItemResponse implements Serializable {
         this.balance = balance;
     }
 
-    public Long getBlocked() {
-        return blocked;
+    public Double getYeildPrice() {
+        return yeildPrice;
     }
 
-    public void setBlocked(Long blocked) {
-        this.blocked = blocked;
+    public void setYeildPrice(Double yeildPrice) {
+        this.yeildPrice = yeildPrice;
     }
 
-    public Long getLots() {
-        return lots;
-    }
-
-    public void setLots(Long lots) {
-        this.lots = lots;
-    }
-
-    public PriceInfo getYieldPrice() {
-        return yieldPrice;
-    }
-
-    public void setYieldPrice(PriceInfo yieldPrice) {
-        this.yieldPrice = yieldPrice;
-    }
-
-    public PriceInfo getPositionPrice() {
+    public Double getPositionPrice() {
         return positionPrice;
     }
 
-    public void setPositionPrice(PriceInfo positionPrice) {
+    public void setPositionPrice(Double positionPrice) {
         this.positionPrice = positionPrice;
     }
-
 }

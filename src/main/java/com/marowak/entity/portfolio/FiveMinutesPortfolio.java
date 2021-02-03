@@ -5,5 +5,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "five_minutes_portfolio")
-public class FiveMinutesPortfolio extends Portfolio{
+public class FiveMinutesPortfolio extends Portfolio {
+    public FiveMinutesPortfolio() {
+    }
+
+    public FiveMinutesPortfolio(Portfolio portfolio) {
+        super(portfolio);
+    }
 }

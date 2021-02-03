@@ -1,36 +1,36 @@
 package com.marowak.response.portfolio;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import java.io.Serializable;
+public class PortfolioResponse {
+    private Long id;
+    private Date timeStamp;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class PortfolioResponse  implements Serializable {
-    private String status;
-    private String trackingId;
-    private PortfolioPayload payload;
+    private List<PortfolioItemResponse> items = new ArrayList<>();
 
-    public String getStatus() {
-        return status;
+    public Long getId() {
+        return id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getTrackingId() {
-        return trackingId;
+    public Date getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setTrackingId(String trackingId) {
-        this.trackingId = trackingId;
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
-    public PortfolioPayload getPayload() {
-        return payload;
+    public List<PortfolioItemResponse> getItems() {
+        return items;
     }
 
-    public void setPayload(PortfolioPayload payload) {
-        this.payload = payload;
+    public void setItems(List<PortfolioItemResponse> items) {
+        this.items = items;
     }
 }

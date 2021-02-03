@@ -1,4 +1,4 @@
-package com.marowak.response.portfolio;
+package com.marowak.response.portfolioTink;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

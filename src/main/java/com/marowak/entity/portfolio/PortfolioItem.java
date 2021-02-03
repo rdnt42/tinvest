@@ -12,7 +12,7 @@ public class PortfolioItem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "portfolio_id", nullable = false)
+    @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
     @Column(name = "ticker")

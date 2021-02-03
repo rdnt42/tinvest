@@ -66,10 +66,9 @@ public class TaskSchedulers {
     public void getPortfolioMinuteScheduler() {
         assertThat(currentPortfolio, is(notNullValue()));
 
-//        Portfolio currentPortfolio = new
-//        oneMinutePortfolioRepository.save(currentPortfolio);
+        OneMinutePortfolio portfolio = new OneMinutePortfolio(currentPortfolio);
 
-        log.info("Save minute: ");
+        OneMinutePortfolio result = oneMinutePortfolioRepository.save(portfolio);
 
         log.info("Save minute portfolio, id: " + result.getId());
     }
@@ -78,7 +77,7 @@ public class TaskSchedulers {
     public void getPortfolioFiveMinutesScheduler() {
         assertThat(currentPortfolio, is(notNullValue()));
 
-            FiveMinutesPortfolio portfolio = (FiveMinutesPortfolio) currentPortfolio;
+            FiveMinutesPortfolio portfolio = new FiveMinutesPortfolio(currentPortfolio);
 
             FiveMinutesPortfolio result = fiveMinutesPortfolioRepository.save(portfolio);
 
