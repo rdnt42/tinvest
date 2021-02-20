@@ -18,7 +18,12 @@ public class PortfolioController {
         this.portfolioService = portfolioService;
     }
 
-    @GetMapping("/portfolio")
+    @GetMapping("/portfolio/last")
+    public PortfolioResponse getLast() {
+        return portfolioService.getLast();
+    }
+
+    @GetMapping("/portfolio/all")
     public List<PortfolioResponse> getAll() {
         return portfolioService.getAll();
     }

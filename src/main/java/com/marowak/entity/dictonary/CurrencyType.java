@@ -4,13 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "currency_type")
-public class CurrencyType {
+public class CurrencyType  implements Serializable {
 
-    public static Long CURRENCY_TYPE_RUB = 1L;
-    public static Long CURRENCY_TYPE_USD = 2L;
+    public static final Long CURRENCY_TYPE_RUB = 1L;
+    public static final Long CURRENCY_TYPE_USD = 2L;
 
     @Id
     private Long id;

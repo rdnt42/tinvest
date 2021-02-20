@@ -3,17 +3,18 @@ package com.marowak.entity.portfolio;
 import com.marowak.entity.dictonary.CurrencyType;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "portfolio_item")
-public class PortfolioItem {
+public class PortfolioItem implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "portfolio_id")
-    private Portfolio portfolio;
+    @ManyToMany(mappedBy = "portfolioItems")
+    private Set<Portfolio> portfolios;
 
     @Column(name = "ticker")
     private String ticker;
@@ -24,23 +25,17 @@ public class PortfolioItem {
     @Column(name = "balance")
     private Long balance;
 
-//    @Column(name = "blocked")
-//    private Long blocked;
-
-//    @Column(name = "lots")
-//    private Long lots;
-
     @Column(name = "yield_price")
     private Double yeildPrice;
 
     @Column(name = "position_price")
     private Double positionPrice;
 
-    @Column(name = "currency_type_id")
+    @Column(name = "currency_type_id", insertable = false, updatable = false)
     private Long currencyTypeId;
 
     @ManyToOne
-    @JoinColumn(name = "currency_type_id", insertable = false, updatable = false)
+    @JoinColumn(name = "currency_type_id")
     private CurrencyType type;
 
     public Long getId() {
@@ -75,12 +70,12 @@ public class PortfolioItem {
         this.balance = balance;
     }
 
-    public Portfolio getPortfolio() {
-        return portfolio;
+    public Set<Portfolio> getPortfolios() {
+        return portfolios;
     }
 
-    public void setPortfolio(Portfolio portfolio) {
-        this.portfolio = portfolio;
+    public void setPortfolios(Set<Portfolio> portfolios) {
+        this.portfolios = portfolios;
     }
 
     public Double getYeildPrice() {

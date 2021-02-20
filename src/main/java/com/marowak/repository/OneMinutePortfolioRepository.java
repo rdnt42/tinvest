@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OneMinutePortfolioRepository extends JpaRepository<OneMinutePortfolio, Long> {
-
+    OneMinutePortfolio findFirstByOrderByIdDesc();
 }

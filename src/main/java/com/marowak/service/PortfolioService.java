@@ -1,7 +1,7 @@
 package com.marowak.service;
 
-import com.marowak.entity.portfolio.Portfolio;
 import com.marowak.response.portfolio.PortfolioResponse;
+import com.marowak.response.portfolioTink.PortfolioTinkResponse;
 
 import java.util.List;
 
@@ -9,11 +9,14 @@ public interface PortfolioService {
 
     /**
      * get current value of user portfolio from tink api
-     * @return Portfolio object
+     * @return Portfolio response
      */
-    Portfolio getPortfolioREST();
+    PortfolioTinkResponse getPortfolioREST();
+
+    <T> boolean savePortfolio(PortfolioTinkResponse response, Class<T> c);
 
     List<PortfolioResponse> getAll();
 
+    PortfolioResponse getLast();
 
 }

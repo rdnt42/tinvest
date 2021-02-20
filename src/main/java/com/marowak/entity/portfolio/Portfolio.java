@@ -17,7 +17,7 @@ public class Portfolio implements Serializable {
     @Column(name = "time_stamp")
     private Date timeStamp = new Date();
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<PortfolioItem> portfolioItems = new HashSet<>();
 
     public Portfolio() {

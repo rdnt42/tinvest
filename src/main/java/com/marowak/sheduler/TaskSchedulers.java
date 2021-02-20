@@ -4,18 +4,13 @@ import com.marowak.entity.portfolio.FiveMinutesPortfolio;
 import com.marowak.entity.portfolio.HalfHourPortfolio;
 import com.marowak.entity.portfolio.OneMinutePortfolio;
 import com.marowak.entity.portfolio.Portfolio;
-import com.marowak.repository.FiveMinutesPortfolioRepository;
-import com.marowak.repository.HalfHourPortfolioRepository;
-import com.marowak.repository.OneMinutePortfolioRepository;
+import com.marowak.repository.PortfolioItemRepository;
+import com.marowak.response.portfolioTink.PortfolioTinkResponse;
 import com.marowak.service.PortfolioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 
 @Component
 public class TaskSchedulers {
@@ -27,71 +22,39 @@ public class TaskSchedulers {
     private static final int GET_IN_HALF_HOUR = 60 * 60 * 1000;
 
 
-    public static Portfolio currentPortfolio = null;
+    private PortfolioTinkResponse currentResponse = null;
 
-    final
-    OneMinutePortfolioRepository oneMinutePortfolioRepository;
+    private final PortfolioService portfolioService;
+    final PortfolioItemRepository portfolioItemRepository;
 
-    final
-    FiveMinutesPortfolioRepository fiveMinutesPortfolioRepository;
-
-    final
-    HalfHourPortfolioRepository halfHourPortfolioRepository;
-
-    final
-    PortfolioService portfolioService;
-
-    public TaskSchedulers(OneMinutePortfolioRepository oneMinutePortfolioRepository, FiveMinutesPortfolioRepository fiveMinutesPortfolioRepository,
-                          HalfHourPortfolioRepository halfHourPortfolioRepository, PortfolioService portfolioService) {
-        this.oneMinutePortfolioRepository = oneMinutePortfolioRepository;
-        this.fiveMinutesPortfolioRepository = fiveMinutesPortfolioRepository;
-        this.halfHourPortfolioRepository = halfHourPortfolioRepository;
+    public TaskSchedulers(PortfolioService portfolioService, PortfolioItemRepository portfolioItemRepository) {
         this.portfolioService = portfolioService;
+        this.portfolioItemRepository = portfolioItemRepository;
     }
 
     @Scheduled(fixedRate = GET_EVERY_IN_SEC)
     public void getPortfolioScheduler() {
+        PortfolioTinkResponse response = portfolioService.getPortfolioREST();
 
-        Portfolio portfolio = portfolioService.getPortfolioREST();
-
-        if (portfolio != null) {
-            currentPortfolio = portfolio;
+        if (response != null) {
+            currentResponse = response;
         }
 
-        log.info("Get portfolio, size: " + currentPortfolio.getPortfolioItems().size());
-
+//        log.info("Get portfolio, size: {}", currentPortfolio.getPortfolioItems().size());
     }
 
     @Scheduled(fixedRate = GET_IN_MINUTE)
     public void getPortfolioMinuteScheduler() {
-        assertThat(currentPortfolio, is(notNullValue()));
-
-        OneMinutePortfolio portfolio = new OneMinutePortfolio(currentPortfolio);
-
-        OneMinutePortfolio result = oneMinutePortfolioRepository.save(portfolio);
-
-        log.info("Save minute portfolio, id: " + result.getId());
+        portfolioService.savePortfolio(currentResponse, OneMinutePortfolio.class);
     }
 
     @Scheduled(fixedRate = GET_IN_FIVE_MINUTES)
     public void getPortfolioFiveMinutesScheduler() {
-        assertThat(currentPortfolio, is(notNullValue()));
-
-            FiveMinutesPortfolio portfolio = new FiveMinutesPortfolio(currentPortfolio);
-
-            FiveMinutesPortfolio result = fiveMinutesPortfolioRepository.save(portfolio);
-
-            log.info("Save five minutes portfolio, id: " + result.getId());
+        portfolioService.savePortfolio(currentResponse, FiveMinutesPortfolio.class);
     }
 
     @Scheduled(fixedRate = GET_IN_HALF_HOUR)
     public void getPortfolioHalfHourScheduler() {
-        assertThat(currentPortfolio, is(notNullValue()));
-
-        HalfHourPortfolio portfolio = (HalfHourPortfolio) currentPortfolio;
-
-        HalfHourPortfolio result = halfHourPortfolioRepository.save(portfolio);
-
-        log.info("Save half hour portfolio, id: " + result.getId());
+        portfolioService.savePortfolio(currentResponse, HalfHourPortfolio.class);
     }
 }
