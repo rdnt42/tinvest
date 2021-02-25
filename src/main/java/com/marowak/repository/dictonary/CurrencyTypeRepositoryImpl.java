@@ -17,7 +17,7 @@ public class CurrencyTypeRepositoryImpl implements DictonaryCustomRepository<Cur
     @Override
     public CurrencyType findOneByName(String name) {
         List<CurrencyType> type = currencyTypeRepository.findByName(name);
-        if (type != null && type.size() > 0) {
+        if (type != null && !type.isEmpty()) {
             return type.get(0);
         }
 

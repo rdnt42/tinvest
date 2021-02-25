@@ -42,7 +42,7 @@ public class PortfolioEncoder {
 
         response.setTicker(item.getTicker());
         response.setName(item.getName());
-        response.setType(item.getType().getName());
+        response.setType(item.getCurrencyType().getName());
         response.setBalance(item.getBalance());
         response.setYeildPrice(item.getYeildPrice());
         response.setPositionPrice(item.getPositionPrice());

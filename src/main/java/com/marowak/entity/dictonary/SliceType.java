@@ -7,11 +7,11 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "currency_type")
-public class CurrencyType  implements Serializable {
-
-    public static final Long CURRENCY_TYPE_RUB = 1L;
-    public static final Long CURRENCY_TYPE_USD = 2L;
+@Table(name = "slice_type")
+public class SliceType implements Serializable {
+    public static final Long SLICE_TYPE_MINUTE = 1L;
+    public static final Long SLICE_TYPE_FIVE_MINUTES = 2L;
+    public static final Long SLICE_TYPE_HAL_HOUR = 3L;
 
     @Id
     private Long id;
@@ -31,7 +31,7 @@ public class CurrencyType  implements Serializable {
         return name;
     }
 
-    public void setName(String type) {
-        this.name = type;
+    public void setName(String name) {
+        this.name = name;
     }
 }

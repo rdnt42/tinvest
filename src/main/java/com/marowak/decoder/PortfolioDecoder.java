@@ -61,7 +61,7 @@ public class PortfolioDecoder {
             portfolioItem.setPositionPrice(item.getPositionPrice().getValue());
 
             CurrencyType type = currencyTypeRepository.findOneByName(item.getPositionPrice().getCurrency());
-            portfolioItem.setType(type);
+            portfolioItem.setCurrencyType(type);
         }
 
         return portfolioItem;

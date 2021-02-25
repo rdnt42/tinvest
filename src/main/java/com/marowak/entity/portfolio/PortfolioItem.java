@@ -1,9 +1,11 @@
 package com.marowak.entity.portfolio;
 
 import com.marowak.entity.dictonary.CurrencyType;
+import com.marowak.entity.dictonary.SliceType;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -13,8 +15,11 @@ public class PortfolioItem implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @ManyToMany(mappedBy = "portfolioItems")
-    private Set<Portfolio> portfolios;
+    @ManyToOne
+    private Portfolio portfolio;
+
+    @Column(name = "time_stamp")
+    private Date timeStamp = new Date();
 
     @Column(name = "ticker")
     private String ticker;
@@ -36,7 +41,11 @@ public class PortfolioItem implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "currency_type_id")
-    private CurrencyType type;
+    private CurrencyType currencyType;
+
+    @ManyToOne
+    @JoinColumn(name = "slice_type_id")
+    private SliceType sliceType;
 
     public Long getId() {
         return id;
@@ -44,6 +53,14 @@ public class PortfolioItem implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public String getTicker() {
@@ -70,12 +87,12 @@ public class PortfolioItem implements Serializable {
         this.balance = balance;
     }
 
-    public Set<Portfolio> getPortfolios() {
-        return portfolios;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void setPortfolios(Set<Portfolio> portfolios) {
-        this.portfolios = portfolios;
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     public Double getYeildPrice() {
@@ -102,11 +119,19 @@ public class PortfolioItem implements Serializable {
         this.currencyTypeId = currencyTypeId;
     }
 
-    public CurrencyType getType() {
-        return type;
+    public CurrencyType getCurrencyType() {
+        return currencyType;
     }
 
-    public void setType(CurrencyType type) {
-        this.type = type;
+    public void setCurrencyType(CurrencyType currencyType) {
+        this.currencyType = currencyType;
+    }
+
+    public SliceType getSliceType() {
+        return sliceType;
+    }
+
+    public void setSliceType(SliceType sliceType) {
+        this.sliceType = sliceType;
     }
 }
