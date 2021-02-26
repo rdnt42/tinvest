@@ -5,7 +5,7 @@ public class PortfolioItemResponse {
     private String name;
     private String type;
 
-    private Long balance;
+    private int balance;
 
     private Double yeildPrice;
     private Double positionPrice;
@@ -34,11 +34,11 @@ public class PortfolioItemResponse {
         this.type = type;
     }
 
-    public Long getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 

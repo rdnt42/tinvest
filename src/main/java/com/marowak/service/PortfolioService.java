@@ -1,5 +1,6 @@
 package com.marowak.service;
 
+import com.marowak.entity.dictonary.SliceType;
 import com.marowak.response.portfolio.PortfolioResponse;
 import com.marowak.response.portfolioTink.PortfolioTinkResponse;
 
@@ -13,10 +14,13 @@ public interface PortfolioService {
      */
     PortfolioTinkResponse getPortfolioREST();
 
-    <T> boolean savePortfolio(PortfolioTinkResponse response, Class<T> c);
+    boolean savePortfolio(PortfolioTinkResponse response, int sliceTypeId);
 
     List<PortfolioResponse> getAll();
 
+    /**
+     * Get last record
+     * @return
+     */
     PortfolioResponse getLast();
-
 }

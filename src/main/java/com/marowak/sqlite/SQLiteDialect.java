@@ -4,12 +4,13 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.SQLFunctionTemplate;
 import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.VarArgsSQLFunction;
+import org.hibernate.dialect.identity.IdentityColumnSupport;
 import org.hibernate.type.StringType;
 
 import java.sql.Types;
 
-public class SQLDialect extends Dialect {
-    public SQLDialect() {
+public class SQLiteDialect extends Dialect {
+    public SQLiteDialect() {
         registerColumnType(Types.BIT, "integer");
         registerColumnType(Types.TINYINT, "tinyint");
         registerColumnType(Types.SMALLINT, "smallint");
@@ -57,6 +58,14 @@ public class SQLDialect extends Dialect {
         return "select last_insert_rowid()";
     }
 
+    public boolean supportsLimit() {
+        return true;
+    }
+
+    protected String getLimitString(String query, boolean hasOffset) {
+        return new StringBuffer(query.length() + 20).append(query).append(hasOffset ? " limit ? offset ?" : " limit ?")
+                .toString();
+    }
 
     public boolean supportsTemporaryTables() {
         return true;
@@ -127,4 +136,8 @@ public class SQLDialect extends Dialect {
         return false;
     }
 
+    @Override
+    public IdentityColumnSupport getIdentityColumnSupport() {
+        return new SQLiteIdentityColumnSupport();
+    }
 }

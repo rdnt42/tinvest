@@ -10,20 +10,20 @@ import java.io.Serializable;
 @Table(name = "currency_type")
 public class CurrencyType  implements Serializable {
 
-    public static final Long CURRENCY_TYPE_RUB = 1L;
-    public static final Long CURRENCY_TYPE_USD = 2L;
+    public static final int CURRENCY_TYPE_RUB = 1;
+    public static final int CURRENCY_TYPE_USD = 2;
 
     @Id
-    private Long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

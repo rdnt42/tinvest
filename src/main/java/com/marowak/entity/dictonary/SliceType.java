@@ -9,21 +9,21 @@ import java.io.Serializable;
 @Entity
 @Table(name = "slice_type")
 public class SliceType implements Serializable {
-    public static final Long SLICE_TYPE_MINUTE = 1L;
-    public static final Long SLICE_TYPE_FIVE_MINUTES = 2L;
-    public static final Long SLICE_TYPE_HAL_HOUR = 3L;
+    public static final int SLICE_TYPE_MINUTE = 1;
+    public static final int SLICE_TYPE_FIVE_MINUTES = 2;
+    public static final int SLICE_TYPE_HALF_HOUR = 3;
 
     @Id
-    private Long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

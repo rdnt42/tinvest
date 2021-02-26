@@ -11,6 +11,13 @@ import java.util.List;
 
 @Service
 public class PortfolioEncoder {
+
+    private final PortfolioItemEncoder portfolioItemEncoder;
+
+    public PortfolioEncoder(PortfolioItemEncoder portfolioItemEncoder) {
+        this.portfolioItemEncoder = portfolioItemEncoder;
+    }
+
     public PortfolioResponse encode(Portfolio portfolio) {
         PortfolioResponse response = new PortfolioResponse();
 
@@ -23,29 +30,12 @@ public class PortfolioEncoder {
 
         List<PortfolioItemResponse> itemResponses = new ArrayList<>();
         for (PortfolioItem item : portfolio.getPortfolioItems()) {
-            PortfolioItemResponse itemResponse = encode(item);
+            PortfolioItemResponse itemResponse = portfolioItemEncoder.encode(item);
 
             itemResponses.add(itemResponse);
         }
 
         response.setItems(itemResponses);
-
-        return response;
-    }
-
-    public PortfolioItemResponse encode(PortfolioItem item) {
-        PortfolioItemResponse response = new PortfolioItemResponse();
-
-        if (item == null) {
-            return response;
-        }
-
-        response.setTicker(item.getTicker());
-        response.setName(item.getName());
-        response.setType(item.getCurrencyType().getName());
-        response.setBalance(item.getBalance());
-        response.setYeildPrice(item.getYeildPrice());
-        response.setPositionPrice(item.getPositionPrice());
 
         return response;
     }

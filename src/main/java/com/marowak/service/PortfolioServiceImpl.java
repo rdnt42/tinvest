@@ -3,13 +3,10 @@ package com.marowak.service;
 import com.marowak.constant.Urls;
 import com.marowak.decoder.PortfolioDecoder;
 import com.marowak.encoder.PortfolioEncoder;
-import com.marowak.entity.portfolio.FiveMinutesPortfolio;
-import com.marowak.entity.portfolio.HalfHourPortfolio;
-import com.marowak.entity.portfolio.OneMinutePortfolio;
+import com.marowak.entity.dictonary.SliceType;
 import com.marowak.entity.portfolio.Portfolio;
-import com.marowak.repository.FiveMinutesPortfolioRepository;
-import com.marowak.repository.HalfHourPortfolioRepository;
-import com.marowak.repository.OneMinutePortfolioRepository;
+import com.marowak.repository.PortfolioRepository;
+import com.marowak.repository.dictonary.SliceTypeRepository;
 import com.marowak.response.portfolio.PortfolioResponse;
 import com.marowak.response.portfolioTink.PortfolioTinkResponse;
 import org.slf4j.Logger;
@@ -18,8 +15,10 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,19 +32,17 @@ public class PortfolioServiceImpl implements PortfolioService {
     private final PortfolioDecoder portfolioDecoder;
     private final PortfolioEncoder portfolioEncoder;
 
-    private final OneMinutePortfolioRepository oneMinutePortfolioRepository;
-    private final FiveMinutesPortfolioRepository fiveMinutesPortfolioRepository;
-    private final HalfHourPortfolioRepository halfHourPortfolioRepository;
+
+    private final PortfolioRepository portfolioRepository;
+    private final SliceTypeRepository sliceTypeRepository;
 
 
     public PortfolioServiceImpl(PortfolioDecoder portfolioDecoder, PortfolioEncoder portfolioEncoder,
-                                OneMinutePortfolioRepository oneMinutePortfolioRepository,
-                                FiveMinutesPortfolioRepository fiveMinutesPortfolioRepository, HalfHourPortfolioRepository halfHourPortfolioRepository) {
+                                PortfolioRepository portfolioRepository, SliceTypeRepository sliceTypeRepository) {
         this.portfolioDecoder = portfolioDecoder;
         this.portfolioEncoder = portfolioEncoder;
-        this.oneMinutePortfolioRepository = oneMinutePortfolioRepository;
-        this.fiveMinutesPortfolioRepository = fiveMinutesPortfolioRepository;
-        this.halfHourPortfolioRepository = halfHourPortfolioRepository;
+        this.portfolioRepository = portfolioRepository;
+        this.sliceTypeRepository = sliceTypeRepository;
     }
 
     @Override
@@ -68,39 +65,25 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
-    public <T> boolean savePortfolio(PortfolioTinkResponse response, Class<T> c) {
+    @Transactional
+    public boolean savePortfolio(PortfolioTinkResponse response, int sliceTypeId) {
         assertThat(response, is(notNullValue()));
+        SliceType sliceType = sliceTypeRepository.findById(sliceTypeId).orElse(null);
+        assertThat(sliceType, is(notNullValue()));
 
-        Portfolio portfolio = portfolioDecoder.decode(response);
+        Portfolio portfolio = portfolioDecoder.decode(response, sliceType);
+        portfolioRepository.save(portfolio);
 
-        if (OneMinutePortfolio.class.equals(c)) {
-            OneMinutePortfolio oneMinutePortfolio = new OneMinutePortfolio(portfolio);
-            oneMinutePortfolioRepository.save(oneMinutePortfolio);
-
-            log.info("Save minute portfolio, id: {}", oneMinutePortfolio.getId());
-        } else if (FiveMinutesPortfolio.class.equals(c)) {
-            FiveMinutesPortfolio fiveMinutesPortfolio = new FiveMinutesPortfolio(portfolio);
-            fiveMinutesPortfolioRepository.save(fiveMinutesPortfolio);
-
-            log.info("Save five minutes portfolio, id: {}", fiveMinutesPortfolio.getId());
-        } else if (HalfHourPortfolio.class.equals(c)) {
-            HalfHourPortfolio halfHourPortfolio = new HalfHourPortfolio(portfolio);
-            halfHourPortfolioRepository.save(halfHourPortfolio);
-
-            log.info("Save hal hour portfolio, id: {}", halfHourPortfolio.getId());
-        } else {
-            throw new IllegalArgumentException("Unknown portfolio class");
-        }
-
+        log.info("Save {} portfolio, id: {}", sliceType.getName(), portfolio.getId());
         return true;
     }
 
     @Override
     public List<PortfolioResponse> getAll() {
-        List<OneMinutePortfolio> portfolios = oneMinutePortfolioRepository.findAll();
         List<PortfolioResponse> responses = new ArrayList<>();
 
-        for (OneMinutePortfolio portfolio : portfolios) {
+        List<Portfolio> portfolios = portfolioRepository.findAll();
+        for (Portfolio portfolio : portfolios) {
             PortfolioResponse response = portfolioEncoder.encode(portfolio);
 
             responses.add(response);
@@ -111,8 +94,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     @Override
     public PortfolioResponse getLast() {
-        OneMinutePortfolio item = oneMinutePortfolioRepository.findFirstByOrderByIdDesc();
+        Portfolio portfolio = portfolioRepository.findFirstByOrderByIdDesc();
 
-        return portfolioEncoder.encode(item);
+        return portfolioEncoder.encode(portfolio);
     }
+
 }

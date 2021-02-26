@@ -12,7 +12,7 @@ public class PortfolioTinkItemResponse implements Serializable {
     private String instrumentType;
     private String name;
 
-    private Long balance;
+    private int balance;
     private Long blocked;
     private Long lots;
 
@@ -63,11 +63,11 @@ public class PortfolioTinkItemResponse implements Serializable {
         this.name = name;
     }
 
-    public Long getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 

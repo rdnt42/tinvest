@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CurrencyTypeRepository extends JpaRepository<CurrencyType, Long>, DictonaryCustomRepository<CurrencyType> {
+public interface CurrencyTypeRepository extends JpaRepository<CurrencyType, Integer>, DictonaryCustomRepository<CurrencyType> {
     List<CurrencyType> findByName(String name);
 }

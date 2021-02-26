@@ -1,6 +1,7 @@
 package com.marowak.decoder;
 
 import com.marowak.entity.dictonary.CurrencyType;
+import com.marowak.entity.dictonary.SliceType;
 import com.marowak.entity.portfolio.Portfolio;
 import com.marowak.entity.portfolio.PortfolioItem;
 import com.marowak.repository.dictonary.CurrencyTypeRepositoryImpl;
@@ -21,7 +22,8 @@ public class PortfolioDecoder {
         this.currencyTypeRepository = currencyTypeRepository;
     }
 
-    public Portfolio decode(PortfolioTinkResponse response) {
+
+    public Portfolio decode(PortfolioTinkResponse response, SliceType sliceType) {
         Portfolio portfolio = new Portfolio();
 
         if (response == null || response.getPayload() == null) {
@@ -33,11 +35,14 @@ public class PortfolioDecoder {
 
         for (PortfolioTinkItemResponse itemResponse : itemResponses) {
             PortfolioItem item = decode(itemResponse);
+            item.setSliceType(sliceType);
+            item.setPortfolio(portfolio);
 
             items.add(item);
         }
 
         portfolio.setPortfolioItems(items);
+        portfolio.setSliceType(sliceType);
 
         return portfolio;
     }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PortfolioItemRepository extends JpaRepository<PortfolioItem, Long> {
+public interface PortfolioItemRepository extends JpaRepository<PortfolioItem, Integer> {
     List<PortfolioItem> findAllByTicker(String ticker);
+    List<PortfolioItem> findAllByTickerAndSliceTypeId(String ticker, Long sliceTypeId);
 }

@@ -6,16 +6,16 @@ import com.marowak.entity.dictonary.SliceType;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "portfolio_item")
 public class PortfolioItem implements Serializable {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
+    @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
     @Column(name = "time_stamp")
@@ -28,7 +28,7 @@ public class PortfolioItem implements Serializable {
     private String name;
 
     @Column(name = "balance")
-    private Long balance;
+    private int balance;
 
     @Column(name = "yield_price")
     private Double yeildPrice;
@@ -37,7 +37,11 @@ public class PortfolioItem implements Serializable {
     private Double positionPrice;
 
     @Column(name = "currency_type_id", insertable = false, updatable = false)
-    private Long currencyTypeId;
+    private int currencyTypeId;
+
+
+    @Column(name = "slice_type_id", insertable = false, updatable = false)
+    private int sliceTypeId;
 
     @ManyToOne
     @JoinColumn(name = "currency_type_id")
@@ -47,11 +51,18 @@ public class PortfolioItem implements Serializable {
     @JoinColumn(name = "slice_type_id")
     private SliceType sliceType;
 
-    public Long getId() {
+    public PortfolioItem() {
+    }
+
+    public PortfolioItem(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,11 +90,11 @@ public class PortfolioItem implements Serializable {
         this.name = name;
     }
 
-    public Long getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
@@ -111,14 +122,6 @@ public class PortfolioItem implements Serializable {
         this.positionPrice = positionPrice;
     }
 
-    public Long getCurrencyTypeId() {
-        return currencyTypeId;
-    }
-
-    public void setCurrencyTypeId(Long currencyTypeId) {
-        this.currencyTypeId = currencyTypeId;
-    }
-
     public CurrencyType getCurrencyType() {
         return currencyType;
     }
@@ -133,5 +136,21 @@ public class PortfolioItem implements Serializable {
 
     public void setSliceType(SliceType sliceType) {
         this.sliceType = sliceType;
+    }
+
+    public int getCurrencyTypeId() {
+        return currencyTypeId;
+    }
+
+    public void setCurrencyTypeId(int currencyTypeId) {
+        this.currencyTypeId = currencyTypeId;
+    }
+
+    public int getSliceTypeId() {
+        return sliceTypeId;
+    }
+
+    public void setSliceTypeId(int sliceTypeId) {
+        this.sliceTypeId = sliceTypeId;
     }
 }
