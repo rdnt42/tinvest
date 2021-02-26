@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PortfolioServiceItemImpl implements PortfolioItemService {
+public class PortfolioItemServiceImpl implements PortfolioItemService {
 
     private final PortfolioItemRepository portfolioItemRepository;
     private final PortfolioItemEncoder portfolioItemEncoder;
 
-    public PortfolioServiceItemImpl(PortfolioItemRepository portfolioItemRepository, PortfolioItemEncoder portfolioItemEncoder) {
+    public PortfolioItemServiceImpl(PortfolioItemRepository portfolioItemRepository, PortfolioItemEncoder portfolioItemEncoder) {
         this.portfolioItemRepository = portfolioItemRepository;
         this.portfolioItemEncoder = portfolioItemEncoder;
     }
 
     @Override
-    public List<PortfolioItemResponse> get(String ticker, Long sliceTypeId) {
+    public List<PortfolioItemResponse> get(String ticker, int sliceTypeId) {
         List<PortfolioItem> items = portfolioItemRepository.findAllByTickerAndSliceTypeId(ticker, sliceTypeId);
 
         List<PortfolioItemResponse> responses = new ArrayList<>();

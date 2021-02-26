@@ -32,7 +32,6 @@ public class Portfolio implements Serializable {
     public Portfolio(Portfolio portfolio) {
         this.id = portfolio.id;
         this.timeStamp = portfolio.timeStamp;
-//        this.portfolioItems = portfolio.portfolioItems;
     }
 
     public Long getId() {

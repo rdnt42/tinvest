@@ -1,6 +1,5 @@
 package com.marowak.service;
 
-import com.marowak.entity.dictonary.SliceType;
 import com.marowak.response.portfolio.PortfolioResponse;
 import com.marowak.response.portfolioTink.PortfolioTinkResponse;
 

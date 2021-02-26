@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,9 +66,13 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     @Transactional
     public boolean savePortfolio(PortfolioTinkResponse response, int sliceTypeId) {
-        assertThat(response, is(notNullValue()));
+        if (response == null) {
+            throw new NullPointerException("save response can`t be null");
+        }
         SliceType sliceType = sliceTypeRepository.findById(sliceTypeId).orElse(null);
-        assertThat(sliceType, is(notNullValue()));
+        if (sliceType == null) {
+            throw new NullPointerException("Slice type can`t be null");
+        }
 
         Portfolio portfolio = portfolioDecoder.decode(response, sliceType);
         portfolioRepository.save(portfolio);

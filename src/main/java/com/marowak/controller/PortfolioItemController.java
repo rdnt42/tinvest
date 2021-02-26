@@ -21,7 +21,7 @@ public class PortfolioItemController {
 
     @GetMapping("/portfolio_item")
     public List<PortfolioItemResponse> get(@RequestParam String ticker,
-                                    @RequestParam(name = "slice_type") Long sliceType) {
+                                           @RequestParam(name = "slice_type") int sliceType) {
 
         return portfolioItemService.get(ticker, sliceType);
     }

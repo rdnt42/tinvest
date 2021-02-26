@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PortfolioItemRepository extends JpaRepository<PortfolioItem, Integer> {
     List<PortfolioItem> findAllByTicker(String ticker);
-    List<PortfolioItem> findAllByTickerAndSliceTypeId(String ticker, Long sliceTypeId);
+    List<PortfolioItem> findAllByTickerAndSliceTypeId(String ticker, int sliceTypeId);
 }

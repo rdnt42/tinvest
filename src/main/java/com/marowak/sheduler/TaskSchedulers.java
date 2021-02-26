@@ -1,8 +1,6 @@
 package com.marowak.sheduler;
 
 import com.marowak.entity.dictonary.SliceType;
-import com.marowak.repository.PortfolioItemRepository;
-import com.marowak.repository.dictonary.SliceTypeRepository;
 import com.marowak.response.portfolioTink.PortfolioTinkResponse;
 import com.marowak.service.PortfolioService;
 import org.springframework.scheduling.annotation.Scheduled;

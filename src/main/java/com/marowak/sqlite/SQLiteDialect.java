@@ -50,21 +50,11 @@ public class SQLiteDialect extends Dialect {
     }
 
     public String getIdentityColumnString() {
-        // return "integer primary key autoincrement";
         return "integer";
     }
 
     public String getIdentitySelectString() {
         return "select last_insert_rowid()";
-    }
-
-    public boolean supportsLimit() {
-        return true;
-    }
-
-    protected String getLimitString(String query, boolean hasOffset) {
-        return new StringBuffer(query.length() + 20).append(query).append(hasOffset ? " limit ? offset ?" : " limit ?")
-                .toString();
     }
 
     public boolean supportsTemporaryTables() {
